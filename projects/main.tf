@@ -35,7 +35,7 @@ resource "random_string" "service_project_suffixes" {
 # Create GCP projects for multi-project architecture
 # Implements project isolation for security and resource management
 module "service_projects" {
-  source = "git::https://github.com/cloudon-one/gcp-terraform-modules.git//terraform-google-svc-projects?ref=main"
+  source = "git::https://github.com/cloudon-one/terraform-google-modules.git//terraform-google-svc-projects?ref=main"
 
   billing_account_id               = var.billing_account_id
   folder_id                        = var.folder_id

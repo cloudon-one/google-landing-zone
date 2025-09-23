@@ -75,7 +75,7 @@ resource "google_project_service" "servicenetworking_api" {
 # Configured with high availability and encryption
 module "fintech_redis_instances" {
   for_each = var.redis_instances_config
-  source   = "git::https://github.com/cloudon-one/gcp-terraform-modules.git//terraform-google-memorystore?ref=main"
+  source   = "git::https://github.com/cloudon-one/terraform-google-modules.git//terraform-google-memorystore?ref=main"
 
   project_id    = local.data_project_id
   instance_name = each.key == "main" ? local.redis_instance_name : "${local.redis_instance_name}-${each.key}"

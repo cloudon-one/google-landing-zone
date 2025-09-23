@@ -66,7 +66,7 @@ locals {
 # Implements defense-in-depth with multiple security layers
 module "fintech_gke_cluster" {
   count  = var.gke_config.enabled ? 1 : 0
-  source = "git::https://github.com/cloudon-one/gcp-terraform-modules.git//terraform-google-gke?ref=main"
+  source = "git::https://github.com/cloudon-one/terraform-google-modules.git//terraform-google-gke?ref=main"
 
   project_id   = local.gke_project_id
   cluster_name = local.gke_cluster_name

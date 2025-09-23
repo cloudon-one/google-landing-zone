@@ -97,7 +97,7 @@ resource "google_project_service" "servicenetworking_api" {
 # Each instance is configured with high availability and security features
 module "fintech_cloudsql_instances" {
   for_each = var.sql_instances_config
-  source   = "git::https://github.com/cloudon-one/gcp-terraform-modules.git//terraform-google-cloudsql?ref=main"
+  source   = "git::https://github.com/cloudon-one/terraform-google-modules.git//terraform-google-cloudsql?ref=main"
 
   project_id       = local.data_project_id
   instance_name    = each.key == "analytics" ? local.sql_instance_name : "${local.sql_instance_name}-${each.key}"

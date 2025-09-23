@@ -25,7 +25,7 @@ locals {
 }
 
 module "iam" {
-  source = "git::https://github.com/cloudon-one/gcp-terraform-modules.git//terraform-google-iam?ref=main"
+  source = "git::https://github.com/cloudon-one/terraform-google-modules.git//terraform-google-iam?ref=main"
 
   enable_gke_iam = var.enable_gke_iam
   enable_sql_iam = var.enable_sql_iam

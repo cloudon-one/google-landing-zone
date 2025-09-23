@@ -36,7 +36,7 @@ locals {
 
 # Deploy bastion host for secure administrative access
 module "bastion" {
-  source = "git::https://github.com/cloudon-one/gcp-terraform-modules.git//terraform-google-bastion?ref=main"
+  source = "git::https://github.com/cloudon-one/terraform-google-modules.git//terraform-google-bastion?ref=main"
 
   project_id = local.project_id
   region     = var.region

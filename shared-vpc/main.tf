@@ -59,7 +59,7 @@ locals {
 # Create Shared VPC for GKE workloads
 # This VPC hosts the GKE cluster and related resources
 module "gke_vpc" {
-  source = "git::https://github.com/cloudon-one/gcp-terraform-modules.git//terraform-google-svpc?ref=main"
+  source = "git::https://github.com/cloudon-one/terraform-google-modules.git//terraform-google-svpc?ref=main"
 
   project_id = var.project_id
   vpc_name   = var.gke_vpc_name
