@@ -8,7 +8,7 @@ variable "net_svpc_backend_bucket" {
 variable "net_svpc_backend_prefix" {
   description = "GCS prefix for net-svpc backend state"
   type        = string
-  default     = "net-svpc"
+  default     = "shared-vpc"
 }
 
 variable "svc_projects_backend_bucket" {
@@ -20,7 +20,7 @@ variable "svc_projects_backend_bucket" {
 variable "svc_projects_backend_prefix" {
   description = "GCS prefix for svc-projects backend state"
   type        = string
-  default     = "svc-projects"
+  default     = "projects"
 }
 
 variable "region" {
@@ -38,7 +38,7 @@ variable "zone" {
 variable "name_prefix" {
   description = "Prefix for resource names"
   type        = string
-  default     = "prod"
+  default     = "dev"
 }
 
 variable "service_account_name" {
