@@ -240,7 +240,7 @@ resource "kubernetes_network_policy" "api_to_database" {
     egress {
       to {
         ip_block {
-          cidr = "10.61.1.0/24"
+          cidr = "10.161.1.0/24"
         }
       }
       ports {
