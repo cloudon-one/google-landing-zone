@@ -9,7 +9,7 @@ ssh_keys = {
 }
 enable_iap_tunnel = true
 sa_impersonators = [
-  "user:user1@fintech.com",
+  "user:user1@example.com",
 ]
 
 proxy_source_ranges = [
