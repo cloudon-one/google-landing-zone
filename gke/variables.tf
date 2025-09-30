@@ -17,7 +17,7 @@ variable "net_svpc_backend_bucket" {
 variable "net_svpc_backend_prefix" {
   description = "The prefix for the network service state"
   type        = string
-  default     = "net-svpc"
+  default     = "shared-vpc"
 }
 
 variable "svc_projects_backend_bucket" {
@@ -29,7 +29,7 @@ variable "svc_projects_backend_bucket" {
 variable "svc_projects_backend_prefix" {
   description = "The prefix for the service projects state"
   type        = string
-  default     = "svc-projects"
+  default     = "projects"
 }
 
 variable "net_iam_backend_bucket" {
@@ -41,7 +41,7 @@ variable "net_iam_backend_bucket" {
 variable "net_iam_backend_prefix" {
   description = "The prefix for the net-iam state"
   type        = string
-  default     = "net-iam"
+  default     = "iam"
 }
 
 variable "gke_config" {
@@ -244,7 +244,7 @@ variable "gke_node_pools_config" {
 variable "gke_security_group" {
   description = "Security group for GKE RBAC"
   type        = string
-  default     = "gke-security-groups@fintech.zone"
+  default     = "gke-security-groups@example.com"
 }
 
 variable "labels" {
