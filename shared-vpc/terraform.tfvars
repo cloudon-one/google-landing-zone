@@ -138,7 +138,7 @@ gke_firewall_rules = {
     direction               = "INGRESS"
     priority                = 1000
     disabled                = false
-    enable_logging          = false
+    enable_logging          = true
     source_ranges           = ["10.160.0.0/16", "10.161.0.0/16"]
     destination_ranges      = null
     source_tags             = null
@@ -168,7 +168,7 @@ gke_firewall_rules = {
     direction               = "INGRESS"
     priority                = 1000
     disabled                = false
-    enable_logging          = false
+    enable_logging          = true
     source_ranges           = ["10.160.128.0/17"] # GKE pods subnet
     destination_ranges      = null
     source_tags             = null
@@ -192,6 +192,78 @@ gke_firewall_rules = {
     deny = []
   }
 
+  # Deny all egress by default for security
+  deny-all-egress = {
+    name               = "deny-all-egress"
+    description        = "Default deny all egress traffic"
+    direction          = "EGRESS"
+    priority           = 65534
+    disabled           = false
+    enable_logging     = true
+    source_ranges      = null
+    destination_ranges = ["0.0.0.0/0"]
+    source_tags        = null
+    target_tags        = ["gke-node", "gke-cluster-node"]
+    allow              = []
+    deny = [
+      {
+        protocol = "all"
+        ports    = []
+      }
+    ]
+  }
+
+  # Allow required egress to Google APIs
+  allow-google-apis-egress = {
+    name               = "allow-google-apis-egress"
+    description        = "Allow egress to Google APIs via Private Google Access"
+    direction          = "EGRESS"
+    priority           = 1000
+    disabled           = false
+    enable_logging     = true
+    source_ranges      = null
+    destination_ranges = ["199.36.153.8/30", "199.36.153.4/30"]
+    source_tags        = null
+    target_tags        = ["gke-node", "gke-cluster-node"]
+    allow = [
+      {
+        protocol = "tcp"
+        ports    = ["443"]
+      }
+    ]
+    deny = []
+  }
+
+  # Allow egress to internal VPCs
+  allow-internal-egress = {
+    name               = "allow-internal-egress"
+    description        = "Allow egress to internal VPCs"
+    direction          = "EGRESS"
+    priority           = 1000
+    disabled           = false
+    enable_logging     = true
+    source_ranges      = null
+    destination_ranges = ["10.160.0.0/16", "10.161.0.0/16"]
+    source_tags        = null
+    target_tags        = ["gke-node", "gke-cluster-node"]
+    allow = [
+      {
+        protocol = "tcp"
+        ports    = ["0-65535"]
+      },
+      {
+        protocol = "udp"
+        ports    = ["0-65535"]
+      },
+      {
+        protocol = "icmp"
+        ports    = []
+      }
+    ]
+    deny = []
+  }
+}
+
 data_firewall_rules = {
   data-allow-internal = {
     name                    = "data-allow-internal"
@@ -199,13 +271,84 @@ data_firewall_rules = {
     direction               = "INGRESS"
     priority                = 1000
     disabled                = false
-    enable_logging          = false
+    enable_logging          = true
     source_ranges           = ["10.160.0.0/16", "10.161.0.0/16"]
     destination_ranges      = null
     source_tags             = null
     source_service_accounts = null
     target_tags             = null
     target_service_accounts = null
+    allow = [
+      {
+        protocol = "tcp"
+        ports    = ["0-65535"]
+      },
+      {
+        protocol = "udp"
+        ports    = ["0-65535"]
+      },
+      {
+        protocol = "icmp"
+        ports    = []
+      }
+    ]
+    deny = []
+  }
+
+  # Deny all egress by default for data VPC
+  data-deny-all-egress = {
+    name               = "data-deny-all-egress"
+    description        = "Default deny all egress traffic from data VPC"
+    direction          = "EGRESS"
+    priority           = 65534
+    disabled           = false
+    enable_logging     = true
+    source_ranges      = null
+    destination_ranges = ["0.0.0.0/0"]
+    source_tags        = null
+    target_tags        = null
+    allow              = []
+    deny = [
+      {
+        protocol = "all"
+        ports    = []
+      }
+    ]
+  }
+
+  # Allow required egress to Google APIs from data VPC
+  data-allow-google-apis-egress = {
+    name               = "data-allow-google-apis-egress"
+    description        = "Allow egress to Google APIs from data VPC"
+    direction          = "EGRESS"
+    priority           = 1000
+    disabled           = false
+    enable_logging     = true
+    source_ranges      = null
+    destination_ranges = ["199.36.153.8/30", "199.36.153.4/30"]
+    source_tags        = null
+    target_tags        = null
+    allow = [
+      {
+        protocol = "tcp"
+        ports    = ["443"]
+      }
+    ]
+    deny = []
+  }
+
+  # Allow egress to internal VPCs from data VPC
+  data-allow-internal-egress = {
+    name               = "data-allow-internal-egress"
+    description        = "Allow egress to internal VPCs from data VPC"
+    direction          = "EGRESS"
+    priority           = 1000
+    disabled           = false
+    enable_logging     = true
+    source_ranges      = null
+    destination_ranges = ["10.160.0.0/16", "10.161.0.0/16"]
+    source_tags        = null
+    target_tags        = null
     allow = [
       {
         protocol = "tcp"

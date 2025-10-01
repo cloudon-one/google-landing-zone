@@ -1,7 +1,6 @@
-authorized_networks = [
-  "0.0.0.0/0"
-
-]
+# Bastion access is controlled via IAP tunnel only
+# Remove direct SSH access from internet
+authorized_networks = []
 deletion_protection = true
 ssh_keys = {
   "admin" = "ssh-ed25519 AAAAC3Nz..."

@@ -85,10 +85,10 @@ module "fintech_gke_cluster" {
 
   master_ipv4_cidr_block            = var.gke_config.master_ipv4_cidr_block
   private_endpoint_subnetwork       = "projects/${local.host_project_id}/regions/${var.region}/subnetworks/gke-control-plane-subnet"
-  enable_private_endpoint           = false
+  enable_private_endpoint           = var.gke_config.enable_private_endpoint
   master_authorized_networks        = var.gke_config.master_authorized_networks
   create_service_account            = var.gke_config.create_service_account
-  enable_network_policy             = false
+  enable_network_policy             = var.gke_config.enable_network_policy
   enable_http_load_balancing        = var.gke_config.enable_http_load_balancing
   enable_horizontal_pod_autoscaling = var.gke_config.enable_horizontal_pod_autoscaling
   enable_vertical_pod_autoscaling   = var.gke_config.enable_vertical_pod_autoscaling
@@ -133,7 +133,14 @@ module "fintech_gke_cluster" {
       disk_size       = 100
       disk_type       = "pd-balanced"
       image_type      = "COS_CONTAINERD"
-      oauth_scopes    = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/cloud-platform"]
+      oauth_scopes    = [
+        "https://www.googleapis.com/auth/logging.write",
+        "https://www.googleapis.com/auth/monitoring",
+        "https://www.googleapis.com/auth/devstorage.read_only",
+        "https://www.googleapis.com/auth/service.management.readonly",
+        "https://www.googleapis.com/auth/servicecontrol",
+        "https://www.googleapis.com/auth/trace.append"
+      ]
       service_account = "gke-service-account@${local.gke_project_id}.iam.gserviceaccount.com"
       management = {
         auto_repair  = true
@@ -182,7 +189,7 @@ module "fintech_gke_cluster" {
       enabled = true
     }
     network_policy_config = {
-      disabled = true
+      disabled = false
     }
     config_connector_config = {
       enabled = false
@@ -278,7 +285,14 @@ module "fintech_gke_cluster" {
       node_locations    = config.zones
       max_pods_per_node = 110
       service_account   = "gke-service-account@${local.gke_project_id}.iam.gserviceaccount.com"
-      oauth_scopes      = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/cloud-platform"]
+      oauth_scopes      = [
+        "https://www.googleapis.com/auth/logging.write",
+        "https://www.googleapis.com/auth/monitoring",
+        "https://www.googleapis.com/auth/devstorage.read_only",
+        "https://www.googleapis.com/auth/service.management.readonly",
+        "https://www.googleapis.com/auth/servicecontrol",
+        "https://www.googleapis.com/auth/trace.append"
+      ]
       labels            = config.labels
       tags              = [config.name]
       metadata          = { "disable-legacy-endpoints" = "true" }

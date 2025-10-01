@@ -5,21 +5,21 @@ provider "google" {
 
 # Retrieve network configuration from Shared VPC state
 # Contains VPC names and subnet configurations for bastion placement
-data "terraform_remote_state" "svpc" {
+data "terraform_remote_state" "net_svpc" {
   backend = "gcs"
   config = {
-    bucket = var.svpc_backend_bucket
-    prefix = var.svpc_backend_prefix
+    bucket = var.net_svpc_backend_bucket
+    prefix = var.net_svpc_backend_prefix
   }
 }
 
 # Retrieve service project information from remote state
 # Used for cross-project access configuration
-data "terraform_remote_state" "service_projects" {
+data "terraform_remote_state" "svc_projects" {
   backend = "gcs"
   config = {
-    bucket = var.service_projects_backend_bucket
-    prefix = var.service_projects_backend_prefix
+    bucket = var.svc_projects_backend_bucket
+    prefix = var.svc_projects_backend_prefix
   }
 }
 

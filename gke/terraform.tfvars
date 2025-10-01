@@ -18,10 +18,10 @@ gke_config = {
       display_name = "data-vpc"
     },
   ]
-  enable_private_endpoint           = false
+  enable_private_endpoint           = true
   enable_private_nodes              = true
   enable_workload_identity          = true
-  enable_network_policy             = false
+  enable_network_policy             = true
   enable_http_load_balancing        = true
   enable_horizontal_pod_autoscaling = true
   enable_vertical_pod_autoscaling   = true

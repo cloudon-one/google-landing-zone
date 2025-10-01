@@ -52,12 +52,10 @@ sql_instances_config = {
         collation = "en_US.UTF8"
       }
     }
-    users = {
-      analytics_user = {
-        name     = "analytics_user"
-        password = ""
-      }
-    }
+    # Use Cloud SQL IAM authentication only - no password-based users
+    # Applications connect using Workload Identity service accounts
+    # IAM authentication is enabled via database flag: cloudsql.iam_authentication = on
+    users = {}
     read_replicas = {
       replica = {
         region                = "us-west3"
@@ -67,7 +65,7 @@ sql_instances_config = {
         disk_size             = 250
         disk_autoresize       = true
         disk_autoresize_limit = 0
-        deletion_protection   = false
+        deletion_protection   = true
         ip_configuration = {
           ipv4_enabled                                  = false
           private_network                               = null
