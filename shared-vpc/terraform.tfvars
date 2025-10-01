@@ -342,6 +342,3 @@ dns_records = {
     ttl      = 300
     rrdatas  = ["10.161.4.11"]
   }
-}
-
-

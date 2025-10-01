@@ -88,7 +88,7 @@ module "gke_vpc" {
 # Create Shared VPC for data services
 # This VPC hosts databases, storage, and data processing resources
 module "data_vpc" {
-  source     = "git::https://github.com/cloudon-one/gcp-terraform-modules.git//terraform-google-svpc?ref=main"
+  source     = "git::https://github.com/cloudon-one/terraform-google-modules.git//terraform-google-svpc?ref=main"
   project_id = var.project_id
   vpc_name   = var.data_vpc_name
   subnets = {
