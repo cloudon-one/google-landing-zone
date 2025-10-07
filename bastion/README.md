@@ -111,7 +111,7 @@ The IAP tunnel provides the most secure access method as it doesn't require the 
 ```bash
 terraform output bastion_iap_command
 
-gcloud compute start-iap-tunnel fintech-bastion 22 \
+gcloud compute start-iap-tunnel bastion 22 \
   --local-host-port=localhost:2222 \
   --zone=us-central1-a \
   --project=host-project
@@ -134,7 +134,7 @@ ssh -p 2222 -i ~/.ssh/your_private_key user@localhost
 terraform output bastion_ssh_command
 
 # Or use the command directly
-gcloud compute ssh fintech-bastion \
+gcloud compute ssh bastion \
   --zone=us-central1-a \
   --project=host-project
 ```
@@ -144,7 +144,7 @@ gcloud compute ssh fintech-bastion \
 Create or update your `~/.ssh/config` file:
 
 ```
-Host fintech-bastion
+Host example-bastion
     HostName localhost
     Port 2222
     User your-username
@@ -319,7 +319,7 @@ sudo tail -f /var/log/fail2ban.log
 #### Cloud Logging
 
 ```bash
-gcloud logging read "resource.type=gce_instance AND resource.labels.instance_name=fintech-bastion" \
+gcloud logging read "resource.type=gce_instance AND resource.labels.instance_name=bastion" \
   --project=host-project \
   --limit=50
 ```
@@ -410,7 +410,7 @@ gcloud projects get-iam-policy host-project \
   --filter="bindings.role=roles/iap.tunnelResourceAccessor"
 
 gcloud projects add-iam-policy-binding host-project \
-  --member="user:your-email@fintech.com" \
+  --member="user:your-email@example.com" \
   --role="roles/iap.tunnelResourceAccessor"
 ```
 
@@ -516,7 +516,7 @@ sudo journalctl -u fail2ban
 #### SSH Keys Backup
 
 ```bash
-cp ~/.ssh/fintech_bastion* /secure/backup/location/
+cp ~/.ssh/example_bastion* /secure/backup/location/
 
 terraform state pull > terraform-state-backup.json
 ```
